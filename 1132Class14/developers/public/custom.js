@@ -1,64 +1,63 @@
-// function start       
+// function start
 /**
  * localStorage set data
- * @param {*} key 
- * @param {*} value 
+ * @param {*} key
+ * @param {*} value
  */
 function lsDataSet(key, value) {
-    let jasonToString = JSON.stringify(value);
-    localStorage.setItem(key, jasonToString);
+  let jasonToString = JSON.stringify(value);
+  localStorage.setItem(key, jasonToString);
 }
 /**
  * localStorage get data
- * @param {*} key 
+ * @param {*} key
  */
 function lsDataGet(key) {
-    let lsData =  localStorage.getItem(key);
-    return JSON.parse(lsData);
+  let lsData = localStorage.getItem(key);
+  return JSON.parse(lsData);
 }
-// function end     
+// function end
 
-const dev_form      = document.getElementById('dev_form');
-const d_card_parent = document.getElementById('d_card_parent');
+const dev_form = document.getElementById("dev_form");
+const d_card_parent = document.getElementById("d_card_parent");
 
-dev_form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    let dev_name = this.querySelector('input[name="d_name"]');
-    let skills = this.querySelectorAll('input[name="skill"]:checked');
-    let gender = this.querySelector('input[type="radio"]:checked');
-    let photo_url = this.querySelector('input[name="i_url"]');
+dev_form.addEventListener("submit", function (e) {
+  e.preventDefault();
+  let dev_name = this.querySelector('input[name="d_name"]');
+  let skills = this.querySelectorAll('input[name="skill"]:checked');
+  let gender = this.querySelector('input[type="radio"]:checked');
+  let photo_url = this.querySelector('input[name="i_url"]');
 
-    let skillArray = [];
+  let skillArray = [];
 
-    for (let i = 0; i < skills.length; i++) {
-        skillArray.push(skills[i].value);
-    }
+  for (let i = 0; i < skills.length; i++) {
+    skillArray.push(skills[i].value);
+  }
 
-    let lsArrayData;
-    if (lsDataGet('dev')) {
-        lsArrayData = lsDataGet('dev');
-    } else {
-        lsArrayData = [];
-    }
+  let lsArrayData;
+  if (lsDataGet("dev")) {
+    lsArrayData = lsDataGet("dev");
+  } else {
+    lsArrayData = [];
+  }
 
-    lsArrayData.push({
-        dev_name : dev_name.value,
-        skills   : skillArray,
-        gender   : gender.value,
-        photo_url: photo_url.value
-    });
+  lsArrayData.push({
+    dev_name: dev_name.value,
+    skills: skillArray,
+    gender: gender.value,
+    photo_url: photo_url.value,
+  });
 
-    lsDataSet('dev', lsArrayData);
-    allDevelopersData();
+  lsDataSet("dev", lsArrayData);
+  allDevelopersData();
 });
 
 allDevelopersData();
 function allDevelopersData() {
-
-    let products = lsDataGet('dev');
-    let emptyData = '';
-    products.forEach(element => {
-        emptyData += `
+  let products = lsDataGet("dev");
+  let emptyData = "";
+  products.forEach((element) => {
+    emptyData += `
         <div class="col-md-4">
             <div class="card mb-2">
                 <img src="${element.photo_url}"
@@ -75,7 +74,7 @@ function allDevelopersData() {
             </div>
         </div>
         `;
-    });
+  });
 
-    d_card_parent.innerHTML = emptyData
+  d_card_parent.innerHTML = emptyData;
 }
